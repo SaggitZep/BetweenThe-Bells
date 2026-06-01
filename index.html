@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>בין הצלצולים</title>
+    <style>
+        /* עיצוב פאלת צבעים: Quiet Luxury */
+        :root {
+            --bg-color: #fcfbfa;       /* Ivory - שנהב רך ויוקרתי */
+            --sand-color: #f4f0e6;     /* Warm Sand - חול חם ומרגיע לרקעים משניים */
+            --primary-color: #4a5d2f;  /* Sage Green - ירוק מרווה עמוק ואלגנטי */
+            --accent-color: #a3b899;   /* Light Sage - ירוק מרווה בהיר לאלמנטים גרפיים */
+            --text-color: #3a3a3a;     /* אפור פחם חם, קריא ורך */
+            --card-bg: #ffffff;        /* לבן נקי לחלוטין */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
+        }
+
+        /* מכולה המדמה מסך של טלפון נייד - נקי וללא שוליים מיותרים */
+        .phone-container {
+            width: 100%;
+            max-width: 410px;
+            height: 740px;
+            background-color: var(--bg-color);
+            border-radius: 24px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.03);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        /* סרגל התקדמות עדין בראש המסך */
+        .progress-bar-container {
+            width: 100%;
+            height: 4px;
+            background-color: var(--sand-color);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            display: none; /* מוסתר במסך הפתיחה */
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--primary-color);
+            transition: width 0.4s ease;
+        }
+
+        /* אינדיקטור טקסטואלי לשלב */
+        .step-indicator {
+            font-size: 0.85rem;
+            color: #888;
+            margin-bottom: 10px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* אלמנטים גרפיים מופשטים (Quiet Luxury) */
+        .decor-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid var(--sand-color);
+            pointer-events: none;
+        }
+
+        .decor-1 { width: 300px; height: 300px; top: -100px; right: -100px; background-color: rgba(244, 240, 230, 0.3); z-index: 1; }
+        .decor-2 { width: 200px; height: 200px; bottom: -50px; left: -80px; border-color: rgba(163, 184, 153, 0.2); z-index: 1; }
+
+        /* סגנון כללי למסכים */
+        .screen {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            padding: 50px 30px 40px 30px;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .screen.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* טיפוגרפיה */
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.45rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            line-height: 1.35;
+        }
+
+        p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #4a4a4a;
+        }
+
+        .sub-text {
+            font-size: 1.05rem;
+            color: #5a5a5a;
+            line-height: 1.6;
+        }
+
+        /* תיבת עזר קוגניטיבית נקייה */
+        .hint-box {
+            background-color: var(--card-bg);
+            border-right: 3px solid var(--accent-color);
+            padding: 14px 16px;
+            border-radius: 4px 12px 12px 4px;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.01);
+            line-height: 1.5;
+        }
+
+        /* שדות טקסט */
+        textarea {
+            width: 100%;
+            height: 110px;
+            padding: 16px;
+            border: 1px solid #e5e0d8;
+            border-radius: 14px;
+            background-color: var(--card-bg);
+            resize: none;
+            font-size: 1rem;
+            color: var(--text-color);
+            outline: none;
+            line-height: 1.5;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 93, 47, 0.05);
+        }
+
+        /* כפתורי בחירת רגש (צ'יפים) */
+        .emotion-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .emotion-chip {
+            background-color: var(--card-bg);
+            border: 1px solid #e5e0d8;
+            padding: 12px;
+            border-radius: 50px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .emotion-chip.selected {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* רכיב מסכם קטן במסך האחרון */
+        .summary-showcase {
+            background-color: var(--sand-color);
+            padding: 16px;
+            border-radius: 16px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            text-align: right;
+            width: 100%;
+        }
+
+        .summary-showcase-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #5a5a5a;
+        }
+
+        .summary-item {
+            background: rgba(255, 255, 255, 0.6);
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        /* כפתורים חלקים ומעוגלים */
+        .btn-container {
+            width: 100%;
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        button:active {
+            transform: scale(0.99);
+        }
+
+        /* עיצוב הקרדיט המינימליסטי - Quiet Luxury בתחתית מסך הפתיחה */
+        .app-credit-container {
+            text-align: center;
+            margin-top: 25px;
+            width: 100%;
+        }
+
+        .app-credit-main {
+            color: #8E8E93;
+            font-size: 11px;
+            margin-bottom: 3px;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        .app-credit-sub {
+            color: #AEAEB2;
+            font-size: 10px;
+            font-weight: 300;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        <!-- אלמנטים עיצוביים ברקע -->
+        <div class="decor-circle decor-1"></div>
+        <div class="decor-circle decor-2"></div>
+
+        <!-- סרגל התקדמות עדין בטופ -->
+        <div class="progress-bar-container" id="progressBarContainer">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <!-- מסך 1: פתיחה -->
+        <div class="screen active" id="screen1">
+            <div style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1; text-align: center; align-items: center;">
+                <h1>בין הצלצולים</h1>
+                <p style="color: var(--primary-color); font-weight: 500; margin-bottom: 25px;">לוקחים את הטוב איתנו</p>
+                <p class="sub-text" style="max-width: 290px;">
+                    לפעמים רגע אחד טוב הולך לאיבוד בתוך העומס. בואו ניקח שתי דקות כדי לשים לב אליו.
+                    <br><br>
+                    <span style="font-size: 0.9rem; color: #7a7a7a;">כל מה שייכתב כאן נשאר על המסך שלך בלבד ואינו נשמר.</span>
+                </p>
+            </div>
+            <div class="btn-container">
+                <button onclick="nextScreen(2)">כניסה למרחב</button>
+            </div>
+            
+            <!-- הקרדיט החדש והאלגנטי מוטמע כאן -->
+            <div class="app-credit-container">
+                <p class="app-credit-main">פיתוח והתאמה להקשר הישראלי: שגית ציפלוביץ &middot; 2026</p>
+                <p class="app-credit-sub">מבוסס על התערבות Savouring של Dreer et al.</p>
+            </div>
+        </div>
+
+        <!-- מסך 2: שלב 1 מתוך 5 - זיהוי ושחזור -->
+        <div class="screen" id="screen2">
+            <div>
+                <div class="step-indicator">שלב 1 מתוך 5</div>
+                <h2>לתפוס רגע טוב מהיום</h2>
+                <p>נסו להיזכר ברגע אחד חיובי, אפילו קטן מאוד, שקרה לכם היום בבית הספר.</p>
+                
+                <div class="hint-box">
+                    <strong>זה יכול להיות למשל:</strong> קשר עין או מילה טובה עם תלמיד/ה, שיעור שהרגשתם שזרם נכון, או רגע קצר של שיתוף ופרגון עם קולגה בחדר המורים.
+                </div>
+                
+                <p style="font-weight: 500; margin-bottom: 8px; font-size: 0.95rem;">מה קרה שם?</p>
+                <textarea id="input-event" placeholder="כתבו לעצמכם משפט או שניים כדי להחזיר את הרגע לראש..."></textarea>
+            </div>
+            <div class="btn-container">
+                <button onclick="nextScreen(3)">המשך</button>
+            </div>
+        </div>
+
+        <!-- מסך 3: שלב 2 מתוך 5 - שיום הרגש והתענגות -->
+        <div class="screen" id="screen3">
+            <div>
+                <div class="step-indicator">שלב 2 מתוך 5</div>
+                <h2>להרחיב את הטוב</h2>
+                <p style="background-color: var(--sand-color); padding: 12px; border-radius: 10px; font-size: 0.95rem; font-style: italic; border-left: 3px solid var(--accent-color);">
+                    לפני שתמשיכו, נסו להישאר עם הזיכרון הזה עוד כמה שניות ולהבחין במה הרגשתם באותו רגע.
+                </p>
+                
+                <p style="font-weight: 500; margin-bottom: 6px; margin-top: 25px; font-size: 1rem;">כשאתם חושבים על הרגע הזה עכשיו, איזו תחושה עולה בכם?</p>
+                
+                <div class="emotion-grid">
+                    <div class="emotion-chip" onclick="toggleEmotion(this)">סיפוק</div>
+                    <div class="emotion-chip" onclick="toggleEmotion(this)">גאווה</div>
+                    <div class="emotion-chip" onclick="toggleEmotion(this)">שמחה</div>
+                    <div class="emotion-chip" onclick="toggleEmotion(this)">חיבור</div>
+                    <div class="emotion-chip" onclick="toggleEmotion(this)">תקווה</div>
+                    <div class="emotion-chip" onclick="toggleEmotion(this)">אחר...</div>
+                </div>
+            </div>
+            <div class="btn-container">
+                <button onclick="nextScreen(4)">המשך</button>
+            </div>
+        </div>
+
+        <!-- מסך 4: שלב 3 מתוך 5 - שיוך פנימי -->
+        <div class="screen" id="screen4">
+            <div>
+                <div class="step-indicator">שלב 3 מתוך 5</div>
+                <h2>החלק שלכם ברגע</h2>
+                <p style="font-weight: 500; margin-bottom: 6px; font-size: 1rem;">מה בכם עזר לרגע הזה לקרות?</p>
+                <p class="sub-text" style="margin-bottom: 15px; font-size: 0.9rem;">אפשר לחשוב על תכונה, גישה, פעולה או החלטה שקיבלתם.</p>
+                <textarea id="input-resource" placeholder="חשבו על החלק שלכם ביצירת הרגע הזה..."></textarea>
+            </div>
+            <div class="btn-container">
+                <button onclick="nextScreen(5)">המשך</button>
+            </div>
+        </div>
+
+        <!-- מסך 5: שלב 4 מתוך 5 - עיגון קונקרטי והתנהגותי -->
+        <div class="screen" id="screen5">
+            <div>
+                <div class="step-indicator">שלב 4 מתוך 5</div>
+                <h2>לקחת את זה הלאה</h2>
+                <p>התחושה החיובית והדברים שזיהיתם בעצמכם הם כלים פנימיים שאתם יצרתם.</p>
+                
+                <p style="font-weight: 500; margin-bottom: 8px; margin-top: 25px; font-size: 1rem;">מהו דבר קטן אחד שתרצו לעשות שוב השבוע כדי ליצור עוד רגע כזה?</p>
+                <textarea id="input-future" placeholder="פעולה קטנה, מילה מתוכננת או החלטה להמשך השבוע..."></textarea>
+            </div>
+            <div class="btn-container">
+                <button onclick="nextScreen(6)">סיום ועגינה</button>
+            </div>
+        </div>
+
+        <!-- מסך 6: שלב 5 מתוך 5 - סיום ومודעות היקפית -->
+        <div class="screen" id="screen6">
+            <div style="display: flex; flex-direction: column; justify-content: center; flex-grow: 1; text-align: center; align-items: center;">
+                <div class="step-indicator">שלב 5 מתוך 5</div>
+                <h2>תודה שהקדשת לעצמך רגע.</h2>
+                <p style="font-size: 1rem; color: #555; margin-bottom: 15px;">
+                    לפעמים עצירה קצרה על מה שעבד יכולה לשנות את האופן שבו אנחנו ממשיכים את היום.
+                    אפשר לחזור לכאן בכל פעם שתרצה/י.
+                </p>
+                
+                <!-- רכיב מודעות היקפי מעורר השראה למשך השבוע -->
+                <div class="summary-showcase">
+                    <div class="summary-showcase-title">רגעים טובים שראוי לשים לב אליהם השבוע:</div>
+                    <div class="summary-grid">
+                        <div class="summary-item">תלמיד שחייך בסוף שיעור</div>
+                        <div class="summary-item">הורה שהביע הערכה</div>
+                        <div class="summary-item">שיעור שזרם היטב</div>
+                        <div class="summary-item">שיחה טובה עם עמית</div>
+                        <div class="summary-item">תלמיד שהעז לנסות משהו חדש</div>
+                        <div class="summary-item">הצלחה קטנה בהובלת דיון</div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-container" style="margin-top: 15px;">
+                <button onclick="restartApp()">חזרה למסך הראשי</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // לוגיקת בחירת רגשות (צ'יפים)
+        function toggleEmotion(element) {
+            const chips = document.querySelectorAll('.emotion-chip');
+            chips.forEach(chip => chip.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        // ניווט ולוגיקת פס התקדמות
+        function nextScreen(screenNumber) {
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+
+            const targetScreen = document.getElementById('screen' + screenNumber);
+            targetScreen.classList.add('active');
+
+            const progressBarContainer = document.getElementById('progressBarContainer');
+            const progressBar = document.getElementById('progressBar');
+
+            if (screenNumber === 1) {
+                progressBarContainer.style.display = 'none';
+            } else {
+                progressBarContainer.style.display = 'block';
+                // חישוב אחוז ההתקדמות לפי 5 שלבי ההתערבות (מסכים 2 עד 6)
+                const percentage = (screenNumber - 1) * 20;
+                progressBar.style.width = percentage + '%';
+            }
+        }
+
+        // איפוס מלא וחזרה להתחלה
+        function restartApp() {
+            document.getElementById('input-event').value = '';
+            document.getElementById('input-resource').value = '';
+            document.getElementById('input-future').value = '';
+            const chips = document.querySelectorAll('.emotion-chip');
+            chips.forEach(chip => chip.classList.remove('selected'));
+            nextScreen(1);
+        }
+    </script>
+</body>
+</html>
