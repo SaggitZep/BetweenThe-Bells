@@ -29,7 +29,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* שימוש בגבהים דינמיים מודרניים למניעת חיתוך במובייל */
             height: 100vh;
             height: 100svh;
             height: 100dvh;
@@ -108,7 +107,6 @@
             display: none;
             flex-direction: column;
             height: 100%;
-            /* צמצום הפדינג האנכי במובייל ל-20 פיקסלים לפי הדרישה */
             padding: 24px 24px 20px 24px;
             z-index: 2;
             opacity: 0;
@@ -126,7 +124,7 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            min-height: 0; /* קריטי עבור פלקסבוקס פנימי שלא יחרוג */
+            min-height: 0;
         }
 
         /* טיפוגרפיה מותאמת ומלונטשת למובייל */
@@ -253,7 +251,7 @@
         /* אזור כפתור קבוע בתחתית המסך */
         .btn-container {
             width: 100%;
-            margin-top: auto; /* דוחף את עצמו תמיד לתחתית ה-screen */
+            margin-top: auto;
             padding-top: 10px;
         }
 
@@ -303,32 +301,35 @@
             display: block;
             text-align: center;
             color: #ffffff;
-            background-color: #617a42; /* ירוק מרווה נוכח ועמוק יותר להבלטה */
+            background-color: #617a42;
             padding: 13px 16px;
             border-radius: 14px;
             font-size: 0.9rem;
-            font-weight: 600; /* טקסט מודגש שלא יתפספס */
+            font-weight: 600;
             text-decoration: none;
-            box-shadow: 0 4px 12px rgba(74, 93, 47, 0.15); /* צל עדין שנותן נפח של כפתור לחיץ */
+            box-shadow: 0 4px 12px rgba(74, 93, 47, 0.15);
             transition: all 0.2s ease;
         }
 
         .feedback-link:active {
             background-color: var(--primary-color);
-            transform: scale(0.98); /* אפקט לחיצה קטן במובייל */
+            transform: scale(0.98);
         }
     </style>
 </head>
 <body>
 
     <div class="phone-container">
+        <!-- אלמנטים עיצוביים ברקע -->
         <div class="decor-circle decor-1"></div>
         <div class="decor-circle decor-2"></div>
 
+        <!-- סרגל התקדמות עדין בטופ -->
         <div class="progress-bar-container" id="progressBarContainer">
             <div class="progress-bar" id="progressBar"></div>
         </div>
 
+        <!-- מסך 1: פתיחה -->
         <div class="screen active" id="screen1">
             <div class="screen-content" style="justify-content: center; align-items: center; text-align: center;">
                 <h1>בין הצלצולים</h1>
@@ -350,6 +351,7 @@
             </div>
         </div>
 
+        <!-- מסך 2: שלב 1 מתוך 5 - זיהוי ושחזור -->
         <div class="screen" id="screen2">
             <div class="screen-content">
                 <div class="step-indicator">שלב 1 מתוך 5</div>
@@ -357,7 +359,7 @@
                 <p>נסו להיזכר ברגע אחד חיובי, אפילו קטן מאוד, שקרה לכם היום בבית הספר.</p>
                 
                 <div class="hint-box">
-                    <strong>זה יכול להיות למשל:</strong> קשר עין או מילה טובה עם תלמיד/ה, שיעור שהרגשתם שזרם נכון, או רגע קצר של שיתוף ופרגון עם קולגה.
+                    <strong>זה יכול להיות למשל:</strong> קשר עין או מילה טובה WITH תלמיד/ה, שיעור שהרגשתם שזרם נכון, או רגע קצר של שיתוף ופרגון עם קולגה.
                 </div>
                 
                 <p style="font-weight: 500; margin-bottom: 6px; font-size: 0.9rem;">מה קרה שם?</p>
@@ -368,6 +370,7 @@
             </div>
         </div>
 
+        <!-- מסך 3: שלב 2 מתוך 5 - שיום הרגש והתענגות -->
         <div class="screen" id="screen3">
             <div class="screen-content">
                 <div class="step-indicator">שלב 2 מתוך 5</div>
@@ -392,6 +395,7 @@
             </div>
         </div>
 
+        <!-- מסך 4: שלב 3 מתוך 5 - שיוך פנימי -->
         <div class="screen" id="screen4">
             <div class="screen-content">
                 <div class="step-indicator">שלב 3 מתוך 5</div>
@@ -405,6 +409,7 @@
             </div>
         </div>
 
+        <!-- מסך 5: שלב 4 מתוך 5 - עיגון קונקרטי והתנהגותי -->
         <div class="screen" id="screen5">
             <div class="screen-content">
                 <div class="step-indicator">שלב 4 מתוך 5</div>
@@ -419,6 +424,7 @@
             </div>
         </div>
 
+        <!-- מסך 6: שלב 5 מתוך 5 - סיום ומודעות היקפית -->
         <div class="screen" id="screen6">
             <div class="screen-content" style="justify-content: center; align-items: center; text-align: center;">
                 <div class="step-indicator">שלב 5 מתוך 5</div>
@@ -446,4 +452,54 @@
                 </div>
             </div>
             <div class="btn-container">
-                <button onclick="restartApp
+                <button onclick="restartApp()">חזרה למסך הראשי</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleEmotion(element) {
+            const chips = document.querySelectorAll('.emotion-chip');
+            chips.forEach(chip => chip.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function nextScreen(screenNumber) {
+            // העברת מסכים קשיחה וישירה ללא תלות באלמנטים חיצוניים
+            for (let i = 1; i <= 6; i++) {
+                const scr = document.getElementById('screen' + i);
+                if (scr) scr.classList.remove('active');
+            }
+            
+            const target = document.getElementById('screen' + screenNumber);
+            if (target) target.classList.add('active');
+
+            const pBarContainer = document.getElementById('progressBarContainer');
+            const pBar = document.getElementById('progressBar');
+
+            if (pBarContainer && pBar) {
+                if (screenNumber === 1) {
+                    pBarContainer.style.display = 'none';
+                } else {
+                    pBarContainer.style.display = 'block';
+                    pBar.style.width = ((screenNumber - 1) * 20) + '%';
+                }
+            }
+        }
+
+        function restartApp() {
+            const ev = document.getElementById('input-event');
+            const res = document.getElementById('input-resource');
+            const fut = document.getElementById('input-future');
+            if (ev) ev.value = '';
+            if (res) res.value = '';
+            if (fut) fut.value = '';
+            
+            const chips = document.querySelectorAll('.emotion-chip');
+            chips.forEach(chip => chip.classList.remove('selected'));
+            nextScreen(1);
+        }
+    </script>
+</body>
+</html>
