@@ -2,76 +2,73 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>בין הצלצולים</title>
     <style>
         :root {
-            --bg-color: #fcfbfa; --sand-color: #f4f0e6; --primary-color: #4a5d2f; 
+            --bg-color: #fcfbfa; --sand-color: #f4f0e6; --primary-color: #4a5d2f;
             --accent-color: #a3b899; --text-color: #3a3a3a; --card-bg: #ffffff;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); height: 100dvh; display: flex; justify-content: center; align-items: center; overflow: hidden; }
-        .phone-container { width: 100%; max-width: 410px; height: 100%; background-color: var(--bg-color); position: relative; display: flex; flex-direction: column; }
-        .progress-bar-container { width: 100%; height: 4px; background-color: var(--sand-color); display: none; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
+        .phone-container { width: 100%; max-width: 410px; height: 740px; background-color: var(--bg-color); border-radius: 24px; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.03); overflow: hidden; position: relative; display: flex; flex-direction: column; border: 1px solid rgba(0, 0, 0, 0.02); }
+        .progress-bar-container { width: 100%; height: 4px; background-color: var(--sand-color); position: absolute; top: 0; left: 0; z-index: 10; display: none; }
         .progress-bar { height: 100%; width: 0%; background-color: var(--primary-color); transition: width 0.4s ease; }
-        .screens-wrapper { flex-grow: 1; position: relative; overflow: hidden; }
-        .screen { position: absolute; width: 100%; height: 100%; display: none; flex-direction: column; justify-content: space-between; padding: 40px 30px; opacity: 0; transition: opacity 0.3s ease; }
+        .screen { display: none; flex-direction: column; justify-content: space-between; height: 100%; padding: 50px 30px 40px 30px; opacity: 0; transition: opacity 0.3s ease; }
         .screen.active { display: flex; opacity: 1; }
-        h1 { color: var(--primary-color); font-size: 1.8rem; margin-bottom: 15px; }
-        p { font-size: 1.1rem; line-height: 1.6; color: #4a4a4a; margin-bottom: 20px; }
-        button { width: 100%; background-color: var(--primary-color); color: white; border: none; padding: 16px; border-radius: 50px; font-size: 1.1rem; cursor: pointer; }
-        textarea { width: 100%; height: 120px; padding: 15px; border-radius: 15px; border: 1px solid #dcdcdc; margin-top: 10px; font-size: 1rem; }
+        h1 { color: var(--primary-color); font-size: 2.1rem; margin-bottom: 12px; }
+        p { font-size: 1.05rem; line-height: 1.6; margin-bottom: 20px; color: #4a4a4a; }
+        button { width: 100%; background-color: var(--primary-color); color: white; border: none; padding: 16px; border-radius: 50px; font-size: 1.05rem; cursor: pointer; }
+        textarea { width: 100%; height: 110px; padding: 16px; border: 1px solid #e5e0d8; border-radius: 14px; margin-top: 10px; font-size: 1rem; }
     </style>
 </head>
 <body>
     <div class="phone-container">
         <div class="progress-bar-container" id="progressBarContainer"><div class="progress-bar" id="progressBar"></div></div>
-        <div class="screens-wrapper">
-            <div class="screen active" id="screen1">
-                <div>
-                    <h1>בין הצלצולים</h1>
-                    <p>לפעמים רגע אחד טוב הולך לאיבוד בתוך העומס. בואו ניקח שתי דקות לשים לב אליו.<br><br>כל מה שייכתב כאן נשאר על המסך שלך בלבד.</p>
-                </div>
-                <button onclick="nextScreen(2)">כניסה למרחב</button>
+        <div class="screen active" id="screen1">
+            <div>
+                <h1>בין הצלצולים</h1>
+                <p>בואו ניקח שתי דקות לשים לב לרגע טוב שקרה היום.</p>
             </div>
-            <div class="screen" id="screen2">
-                <div>
-                    <h1>לתפוס רגע טוב</h1>
-                    <p>נסו להיזכר ברגע אחד חיובי, גם קטן מאוד, שקרה לכם היום בבית הספר. מה קרה שם?</p>
-                    <textarea id="input-event" placeholder="כתבו לעצמכם משפט..."></textarea>
-                </div>
-                <button onclick="nextScreen(3)">המשך</button>
+            <button onclick="nextScreen(2)">כניסה למרחב</button>
+        </div>
+        <div class="screen" id="screen2">
+            <div>
+                <h1>לתפוס רגע טוב</h1>
+                <p>מה קרה היום בבית הספר שעשה לך טוב?</p>
+                <textarea id="input-event"></textarea>
             </div>
-            <div class="screen" id="screen3">
-                <div>
-                    <h1>להרחיב את הטוב</h1>
-                    <p>הישארו עם הזיכרון הזה עוד רגע. איזו תחושה עולה בכם?</p>
-                </div>
-                <button onclick="nextScreen(4)">המשך</button>
+            <button onclick="nextScreen(3)">המשך</button>
+        </div>
+        <div class="screen" id="screen3">
+            <div>
+                <h1>להרחיב את הטוב</h1>
+                <p>איזו תחושה עלתה בך ברגע הזה?</p>
             </div>
-            <div class="screen" id="screen4">
-                <div>
-                    <h1>החלק שלכם</h1>
-                    <p>מה בכם עזר לרגע הזה לקרות? (תכונה, גישה או פעולה שלכם).</p>
-                    <textarea id="input-resource"></textarea>
-                </div>
-                <button onclick="nextScreen(5)">המשך</button>
+            <button onclick="nextScreen(4)">המשך</button>
+        </div>
+        <div class="screen" id="screen4">
+            <div>
+                <h1>החלק שלך</h1>
+                <p>מה בך אפשר לרגע הזה לקרות?</p>
+                <textarea id="input-resource"></textarea>
             </div>
-            <div class="screen" id="screen5">
-                <div>
-                    <h1>לקחת הלאה</h1>
-                    <p>מהו דבר קטן אחד שתרצו לעשות שוב השבוע כדי ליצור עוד רגע כזה?</p>
-                    <textarea id="input-future"></textarea>
-                </div>
-                <button onclick="nextScreen(6)">סיום</button>
+            <button onclick="nextScreen(5)">המשך</button>
+        </div>
+        <div class="screen" id="screen5">
+            <div>
+                <h1>לקחת הלאה</h1>
+                <p>מה תרצה/י לעשות שוב השבוע?</p>
+                <textarea id="input-future"></textarea>
             </div>
-            <div class="screen" id="screen6">
-                <div>
-                    <h1>תודה שהקדשת רגע</h1>
-                    <p>עצירה קטנה על מה שעבד משנה את כל היום.</p>
-                </div>
-                <button onclick="location.reload()">חזרה להתחלה</button>
+            <button onclick="nextScreen(6)">סיום</button>
+        </div>
+        <div class="screen" id="screen6">
+            <div>
+                <h1>תודה שהקדשת רגע</h1>
+                <p>עצירה קטנה על מה שעבד משנה את כל היום.</p>
             </div>
+            <button onclick="location.reload()">חזרה להתחלה</button>
         </div>
     </div>
     <script>
