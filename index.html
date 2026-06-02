@@ -291,21 +291,43 @@
             font-size: 9px;
             font-weight: 300;
         }
+
+        /* אלמנט קישור המשוב המעוצב החדש */
+        .feedback-link-container {
+            width: 100%;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .feedback-link {
+            display: block;
+            text-align: center;
+            color: var(--primary-color);
+            background-color: rgba(74, 93, 47, 0.07);
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            border: 1px dashed var(--accent-color);
+            transition: all 0.2s ease;
+        }
+
+        .feedback-link:active {
+            background-color: rgba(74, 93, 47, 0.15);
+        }
     </style>
 </head>
 <body>
 
     <div class="phone-container">
-        <!-- אלמנטים עיצוביים ברקע -->
         <div class="decor-circle decor-1"></div>
         <div class="decor-circle decor-2"></div>
 
-        <!-- סרגל התקדמות עדין בטופ -->
         <div class="progress-bar-container" id="progressBarContainer">
             <div class="progress-bar" id="progressBar"></div>
         </div>
 
-        <!-- מסך 1: פתיחה (כולל קרדיט קבוע בתחתית) -->
         <div class="screen active" id="screen1">
             <div class="screen-content" style="justify-content: center; align-items: center; text-align: center;">
                 <h1>בין הצלצולים</h1>
@@ -321,14 +343,12 @@
                 <button onclick="nextScreen(2)">כניסה למרחב</button>
             </div>
             
-            <!-- הקרדיט מופיע פה כאלמנט קבוע ומעוגן במסך הפתיחה בלבד -->
             <div class="app-credit-container">
                 <p class="app-credit-main">פיתוח והתאמה להקשר הישראלי: שגית ציפלוביץ &middot; 2026</p>
                 <p class="app-credit-sub">מבוסס על התערבות Savouring של Dreer et al.</p>
             </div>
         </div>
 
-        <!-- מסך 2: שלב 1 מתוך 5 - זיהוי ושחזור -->
         <div class="screen" id="screen2">
             <div class="screen-content">
                 <div class="step-indicator">שלב 1 מתוך 5</div>
@@ -347,7 +367,6 @@
             </div>
         </div>
 
-        <!-- מסך 3: שלב 2 מתוך 5 - שיום הרגש והתענגות -->
         <div class="screen" id="screen3">
             <div class="screen-content">
                 <div class="step-indicator">שלב 2 מתוך 5</div>
@@ -372,104 +391,10 @@
             </div>
         </div>
 
-        <!-- מסך 4: שלב 3 מתוך 5 - שיוך פנימי -->
         <div class="screen" id="screen4">
             <div class="screen-content">
                 <div class="step-indicator">שלב 3 מתוך 5</div>
                 <h2>החלק שלכם ברגע</h2>
                 <p style="font-weight: 500; margin-bottom: 4px; font-size: 0.9rem;">מה בכם עזר לרגע הזה לקרות?</p>
                 <p class="sub-text" style="margin-bottom: 10px; font-size: 0.85rem;">אפשר לחשוב על תכונה, גישה, פעולה או החלטה שקיבלתם.</p>
-                <textarea id="input-resource" placeholder="חשבו על החלק שלכם ביצירת הרגע הזה..."></textarea>
-            </div>
-            <div class="btn-container">
-                <button onclick="nextScreen(5)">המשך</button>
-            </div>
-        </div>
-
-        <!-- מסך 5: שלב 4 מתוך 5 - עיגון קונקרטי והתנהגותי -->
-        <div class="screen" id="screen5">
-            <div class="screen-content">
-                <div class="step-indicator">שלב 4 מתוך 5</div>
-                <h2>לקחת את זה הלאה</h2>
-                <p>התחושה החיובית והדברים שזיהיתם בעצמכם הם כלים פנימיים שאתם יצרתם.</p>
-                
-                <p style="font-weight: 500; margin-bottom: 6px; margin-top: 10px; font-size: 0.9rem;">מהו דבר קטן אחד שתרצו לעשות שוב השבוע כדי ליצור עוד רגע כזה?</p>
-                <textarea id="input-future" placeholder="פעולה קטנה, מילה מתוכננת או החלטה להמשך השבוע..."></textarea>
-            </div>
-            <div class="btn-container">
-                <button onclick="nextScreen(6)">סיום ועגינה</button>
-            </div>
-        </div>
-
-        <!-- מסך 6: שלב 5 מתוך 5 - סיום ומודעות היקפית -->
-        <div class="screen" id="screen6">
-            <div class="screen-content" style="justify-content: center; align-items: center; text-align: center;">
-                <div class="step-indicator">שלב 5 מתוך 5</div>
-                <h2>תודה שהקדשת לעצמך רגע.</h2>
-                <p style="font-size: 0.9rem; color: #555; margin-bottom: 10px;">
-                    לפעמים עצירה קצרה על מה שעבד יכולה לשנות את האופן שבו אנחנו ממשיכים את היום.
-                </p>
-                
-                <!-- רכיב מודעות היקפי מעורר השראה למשך השבוע -->
-                <div class="summary-showcase">
-                    <div class="summary-showcase-title">רגעים טובים שראוי לשים לב אליהם השבוע:</div>
-                    <div class="summary-grid">
-                        <div class="summary-item">תלמיד שחייך בסוף שיעור</div>
-                        <div class="summary-item">הורה שהביע הערכה</div>
-                        <div class="summary-item">שיעור שזרם היטב</div>
-                        <div class="summary-item">שיחה טובה עם עמית</div>
-                        <div class="summary-item">תלמיד שהעז לנסות משהו</div>
-                        <div class="summary-item">הצלחה קטנה בהובלת דיון</div>
-                    </div>
-                </div>
-            </div>
-            <div class="btn-container">
-                <button onclick="restartApp()">חזרה למסך הראשי</button>
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-        // לוגיקת בחירת רגשות (צ'יפים)
-        function toggleEmotion(element) {
-            const chips = document.querySelectorAll('.emotion-chip');
-            chips.forEach(chip => chip.classList.remove('selected'));
-            element.classList.add('selected');
-        }
-
-        // ניווט ולוגיקת פס התקדמות
-        function nextScreen(screenNumber) {
-            const screens = document.querySelectorAll('.screen');
-            screens.forEach(screen => {
-                screen.classList.remove('active');
-            });
-
-            const targetScreen = document.getElementById('screen' + screenNumber);
-            targetScreen.classList.add('active');
-
-            const progressBarContainer = document.getElementById('progressBarContainer');
-            const progressBar = document.getElementById('progressBar');
-
-            if (screenNumber === 1) {
-                progressBarContainer.style.display = 'none';
-            } else {
-                progressBarContainer.style.display = 'block';
-                // חישוב אחוז ההתקדמות לפי 5 שלבי ההתערבות (מסכים 2 עד 6)
-                const percentage = (screenNumber - 1) * 20;
-                progressBar.style.width = percentage + '%';
-            }
-        }
-
-        // איפוס מלא וחזרה להתחלה
-        function restartApp() {
-            document.getElementById('input-event').value = '';
-            document.getElementById('input-resource').value = '';
-            document.getElementById('input-future').value = '';
-            const chips = document.querySelectorAll('.emotion-chip');
-            chips.forEach(chip => chip.classList.remove('selected'));
-            nextScreen(1);
-        }
-    </script>
-</body>
-</html>
+                <textarea id="input-resource" placeholder="חשבו על החלק
